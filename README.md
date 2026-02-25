@@ -152,22 +152,43 @@ password: admin123
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/<your-username>/enterprise_doc_intelligence.git
-cd enterprise_doc_intelligence
-2️⃣ Create Virtual Environment
+git clone https://github.com/Sanidhya555/Enterprise_doc_intelligence.git
+cd Enterprise_doc_intelligence
+```
+
+---
+
+### 2️⃣ Create Virtual Environment
+
+```bash
 python -m venv .venv
-.venv\Scripts\activate  # Windows
-3️⃣ Install Dependencies
+.venv\Scripts\activate   # Windows
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
 pip install -r requirements.txt
-4️⃣ Setup Environment Variables
+```
 
-Create .env file:
+---
 
+### 4️⃣ Setup Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
 SECRET_KEY=your_secret_key
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
 OLLAMA_BASE_URL=http://localhost:11434
-5️⃣ Start Ollama
+```
+
+---
+
+### 5️⃣ Start Ollama
 
 Install Ollama from:
 
@@ -175,25 +196,49 @@ https://ollama.com/download
 
 Then run:
 
+```bash
 ollama serve
 ollama pull mistral
-6️⃣ Run Backend
+```
+
+---
+
+### 6️⃣ Run Backend
+
+```bash
 uvicorn app.main:app --reload
+```
 
-Open Swagger docs:
-
+Swagger Docs:  
 http://127.0.0.1:8000/docs
-7️⃣ Run Frontend
+
+---
+
+### 7️⃣ Run Frontend
+
+```bash
 streamlit run frontend/app.py
+```
 
-Open:
-
+Open:  
 http://localhost:8501
-🐳 Docker Setup
-Build Image
+
+
+## 🐳 Docker Setup
+
+### Build Image
+
+```bash
 docker build -t enterprise-rag -f docker/Dockerfile .
-Run Container
+```
+
+### Run Container
+
+```bash
 docker run -p 8000:8000 enterprise-rag
+```
+
+
 📊 FAISS Configuration
 
 Index Type: IndexFlatIP

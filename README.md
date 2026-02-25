@@ -24,61 +24,61 @@ Built with FastAPI, FAISS, SentenceTransformers, and Ollama (Mistral), with a St
 
 ## 🏗️ System Architecture
 
-
+```text
 User
-↓
+  ↓
 Streamlit Frontend
-↓
+  ↓
 FastAPI Backend
-↓
+  ↓
 Embedding Model (SentenceTransformers)
-↓
+  ↓
 FAISS Vector Store
-↓
+  ↓
 Top-K Retrieval
-↓
+  ↓
 Prompt Builder
-↓
+  ↓
 Ollama (Mistral LLM)
-↓
+  ↓
 Final Answer
-
+```
 
 ---
 
 ## 📂 Project Structure
 
-
+```bash
 enterprise_doc_intelligence/
 │
-├── app/ # FastAPI application
-│ ├── api/ # Route definitions
-│ ├── core/ # Config & security
-│ ├── services/ # Business logic
-│ └── main.py
+├── app/                     # FastAPI application
+│   ├── api/                 # Route definitions
+│   ├── core/                # Config & security
+│   ├── services/            # Business logic
+│   └── main.py
 │
-├── pipeline/ # RAG pipeline modules
-│ ├── chunking/
-│ ├── embeddings/
-│ ├── ingestion/
-│ ├── retriever/
-│ ├── vector_store/
-│ ├── llm/
-│ └── evaluation/
+├── pipeline/                # RAG pipeline modules
+│   ├── chunking/
+│   ├── embeddings/
+│   ├── ingestion/
+│   ├── retriever/
+│   ├── vector_store/
+│   ├── llm/
+│   └── evaluation/
 │
-├── frontend/ # Streamlit UI
-│ └── app.py
+├── frontend/                # Streamlit UI
+│   └── app.py
 │
 ├── docker/
-│ └── Dockerfile
+│   └── Dockerfile
 │
 ├── data/
-│ └── embeddings/ # FAISS index stored here (runtime generated)
+│   └── embeddings/          # FAISS index stored here (runtime generated)
 │
 ├── requirements.txt
 ├── .gitignore
 └── README.md
-
+```
 
 ---
 

@@ -237,77 +237,57 @@ docker build -t enterprise-rag -f docker/Dockerfile .
 ```bash
 docker run -p 8000:8000 enterprise-rag
 ```
+---
 
+## 📊 FAISS Configuration
 
-📊 FAISS Configuration
-
-Index Type: IndexFlatIP
-
-Similarity: Cosine similarity (L2 normalized vectors)
-
-Embedding dtype: float32
-
-Persistent storage: data/embeddings/
-
-🔒 Production Considerations
-
-Runtime-generated FAISS index is not committed to Git
-
-Sensitive configs stored in .env
-
-Vector normalization ensures consistent cosine similarity
-
-Metadata-ready chunk storage
-
-Clean repository structure (no venv or generated files)
-
-🚀 Future Improvements
-
-Role-Based Access Control (RBAC)
-
-Streaming LLM responses
-
-Async embedding pipeline
-
-Scalable FAISS IVF index
-
-Cloud storage integration (S3)
-
-CI/CD pipeline
-
-Kubernetes deployment
-
-Redis caching
-
-🎯 Use Cases
-
-Enterprise document search
-
-Internal knowledge assistant
-
-Legal document analysis
-
-HR policy Q&A
-
-Research document summarization
-
-👨‍💻 Author
-
-Sanidhya Sachin Kulkarni
-AI/ML Engineer | Backend Developer
-
-📜 License
-
-MIT License
-
+- **Index Type:** `IndexFlatIP`
+- **Similarity Metric:** Cosine similarity (L2-normalized vectors)
+- **Embedding dtype:** `float32`
+- **Persistent Storage:** `data/embeddings/`
 
 ---
 
-This README is:
+## 🔒 Production Considerations
 
-- Clean
-- Professional
-- Recruiter-friendly
-- Internship-ready
-- Production-aligned
+- Runtime-generated FAISS index is not committed to Git
+- Sensitive configuration values stored in `.env`
+- Vector normalization ensures consistent cosine similarity scoring
+- Clean repository structure (no virtual environment or generated files)
+- Modular RAG pipeline for maintainability and scalability
 
+---
+
+## 🚀 Future Improvements
+
+- Role-Based Access Control (RBAC)
+- Streaming LLM responses
+- Async embedding pipeline
+- Scalable FAISS IVF index
+- Cloud storage integration (S3)
+- CI/CD pipeline
+- Kubernetes deployment
+- Redis caching layer
+
+---
+
+## 🎯 Use Cases
+
+- Enterprise document search
+- Internal knowledge assistant
+- Legal document analysis
+- HR policy Q&A
+- Research document summarization
+
+---
+
+## 👨‍💻 Author
+
+**Sanidhya Sachin Kulkarni**  
+AI/ML Engineer | Backend Developer  
+
+---
+
+## 📜 License
+
+MIT License

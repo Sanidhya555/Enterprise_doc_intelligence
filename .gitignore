@@ -1,0 +1,19 @@
+# Virtual Environment
+.venv/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Runtime data
+data/embeddings/*
+data/raw/*
+!data/embeddings/.gitkeep
+!data/raw/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db

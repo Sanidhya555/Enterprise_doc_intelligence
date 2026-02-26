@@ -49,36 +49,25 @@ Final Answer
 ## 📂 Project Structure
 
 ```bash
-enterprise_doc_intelligence/
+Enterprise_doc_intelligence/
 │
-├── app/                     # FastAPI application
-│   ├── api/                 # Route definitions
-│   ├── core/                # Config & security
-│   ├── services/            # Business logic
-│   └── main.py
+├── backend/
+│   ├── app/                     # FastAPI application
+│   ├── pipeline/                # RAG modules
+│   ├── data/                    # Runtime data storage
+│   │   ├── raw/                 # Uploaded documents
+│   │   └── embeddings/          # FAISS index files
+│   │
+│   ├── Dockerfile
+│   ├── requirements.txt
 │
-├── pipeline/                # RAG pipeline modules
-│   ├── chunking/
-│   ├── embeddings/
-│   ├── ingestion/
-│   ├── retriever/
-│   ├── vector_store/
-│   ├── llm/
-│   └── evaluation/
+├── frontend/
+│   ├── app.py                   # Streamlit UI
+│   ├── Dockerfile
+│   ├── requirements.txt
 │
-├── frontend/                # Streamlit UI
-│   └── app.py
-│
-├── docker/
-│   └── Dockerfile
-│
-├── data/
-│   └── embeddings/          # FAISS index stored here (runtime generated)
-│   └── raw/                 # Stores uploaded files
-|
-├── requirements.txt
 ├── .gitignore
-└── README.md
+├── README.md
 ```
 
 ---

@@ -3,8 +3,8 @@ import requests
 import os
 
 def get_api_url():
-    if os.getenv("RENDER"):
-        return os.environ["API_URL"] 
+    if os.getenv("RENDER") == "true":
+        return os.getenv("API_URL") 
 
     return "http://localhost:8000"
 

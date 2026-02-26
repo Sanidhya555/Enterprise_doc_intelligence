@@ -3,10 +3,10 @@ from pipeline.embeddings.embedder import Embedder
 from pipeline.vector_store.faiss_store import FAISSStore
 from pipeline.retriever.vector_retriever import VectorRetriever
 from pipeline.llm.prompt_template import PromptTemplate
-from pipeline.llm.generator import OllamaGenerator
 from pipeline.ingestion.ingestion_pipeline import IngestionPipeline
 from pipeline.chunking.recursive_chunker import RecursiveChunker
 from datetime import datetime
+from pipeline.llm.generator import OllamaGenerator, OpenAIGenerator
 from fastapi import HTTPException
 from app.core.logger import setup_logger
 
@@ -19,7 +19,15 @@ class RAGService:
 
         self.vector_store = FAISSStore(dimension=384, embedder=self.embedder)
         self.retriever = VectorRetriever(self.embedder, self.vector_store)
-        self.generator = OllamaGenerator(model="mistral")
+
+        use_ollama = os.getenv("USE_OLLAMA", "true").lower() == "true"
+
+        if use_ollama:
+            logger.info("Using Ollama LLM")
+            self.generator = OllamaGenerator(model="mistral")
+        else:
+            logger.info("Using OpenAI LLM")
+            self.generator = OpenAIGenerator()
 
         if os.path.exists("data/embeddings/faiss.index"):
             self.vector_store.load(
@@ -54,7 +62,7 @@ class RAGService:
 
         text = ingestion.process(file_path)
         chunks = chunker.chunk(text)
-
+    
         filename = os.path.basename(file_path)
         timestamp = datetime.utcnow().isoformat()
 

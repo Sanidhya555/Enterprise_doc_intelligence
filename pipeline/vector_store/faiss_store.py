@@ -14,7 +14,20 @@ class FAISSStore:
         faiss.normalize_L2(vectors)
 
     def add(self, embeddings: np.ndarray, chunks: List[dict]):
+
+        if embeddings is None or len(embeddings) == 0:
+            raise ValueError("No embeddings to add to vector store")
+
+        # Convert to numpy
+        embeddings = np.array(embeddings)
+
+        # Ensure float32
         embeddings = embeddings.astype("float32")
+
+        # Ensure 2D
+        if embeddings.ndim == 1:
+            embeddings = embeddings.reshape(1, -1)
+
         self._normalize(embeddings)
 
         self.index.add(embeddings)

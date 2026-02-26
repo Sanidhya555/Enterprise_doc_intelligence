@@ -74,7 +74,8 @@ enterprise_doc_intelligence/
 │
 ├── data/
 │   └── embeddings/          # FAISS index stored here (runtime generated)
-│
+│   └── raw/
+|
 ├── requirements.txt
 ├── .gitignore
 └── README.md

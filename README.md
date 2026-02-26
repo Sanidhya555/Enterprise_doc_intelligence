@@ -74,7 +74,7 @@ enterprise_doc_intelligence/
 │
 ├── data/
 │   └── embeddings/          # FAISS index stored here (runtime generated)
-│   └── raw/
+│   └── raw/                 # Stores uploaded files
 |
 ├── requirements.txt
 ├── .gitignore

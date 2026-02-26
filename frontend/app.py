@@ -1,7 +1,14 @@
 import streamlit as st
 import requests
+import os
 
-API_URL = "http://localhost:8000"
+def get_api_url():
+    if os.getenv("RENDER"):
+        return os.environ["API_URL"] 
+
+    return "http://localhost:8000"
+
+API_URL = get_api_url()
 
 st.title("Enterprise Document Intelligence")
 

@@ -1,19 +1,39 @@
-# Virtual Environment
-.venv/
-
-# Environment variables
-.env
-
-# Python cache
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+.env.local
+.env.production
 
-# Runtime data
-data/embeddings/*
-data/raw/*
-!data/embeddings/.gitkeep
-!data/raw/.gitkeep
+# Data (large files and sensitive data)
+backend/data/embeddings/faiss.index
+backend/data/embeddings/chunks.npy
+backend/data/raw/*.pdf
+backend/data/raw/*.docx
+backend/data/memory.db
+*.log
+logs/
+
+# Keep gitkeeps
+!backend/data/embeddings/.gitkeep
+!backend/data/raw/.gitkeep
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # OS
 .DS_Store
 Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

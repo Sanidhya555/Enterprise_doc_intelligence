@@ -1,283 +1,239 @@
-# 🧠 Enterprise Document Intelligence System  
-### Retrieval-Augmented Generation (RAG) with FAISS + FastAPI + Ollama
+# 🧠 Document Intelligence 
 
-A production-ready enterprise document intelligence system that enables secure document ingestion, semantic search, and AI-powered question answering using Retrieval-Augmented Generation (RAG).
-
-Built with FastAPI, FAISS, SentenceTransformers, and Ollama (Mistral), with a Streamlit frontend and Docker support.
+A production-grade RAG pipeline with a **ChatGPT-like UI**, hybrid retrieval, conversation memory, reranking, query expansion, and guardrails.
 
 ---
 
-## 🚀 Features
+## ✨ What's in Project
 
-- ✅ Secure JWT Authentication
-- ✅ PDF Document Ingestion
-- ✅ Intelligent Text Chunking
-- ✅ SentenceTransformer Embeddings
-- ✅ FAISS Vector Search (Cosine Similarity)
-- ✅ Retrieval-Augmented Generation (RAG)
-- ✅ Ollama LLM Integration (Mistral)
-- ✅ Streamlit Frontend UI
-- ✅ Dockerized Deployment
-- ✅ Production-Ready Project Structure
+| Feature | Details |
+|---|---|
+| **ChatGPT-like UI** | Streaming chat, session sidebar with load/delete, markdown rendering, code highlighting |
+| **Hybrid Retrieval** | BM25 (sparse) + FAISS (dense) fused via Reciprocal Rank Fusion |
+| **Cross-Encoder Reranker** | `ms-marco-MiniLM-L-6-v2` reranks retrieved chunks for precision |
+| **Query Expansion** | LLM generates 2 alternative phrasings → broader recall |
+| **Short-term Memory** | In-memory sliding window (last 10 turns) included in every prompt |
+| **Long-term Memory** | All sessions and messages persisted to SQLite |
+| **Guardrails** | Input: length, harmful content, prompt injection. Output: sanitization |
+| **Evaluation** | Recall@K, Precision@K, MRR@K, NDCG@K + faithfulness heuristic |
+| **Latency Optimization** | Query cache (TTL 10 min), async streaming, batch embeddings |
+| **Streaming** | Token-by-token SSE streaming responses in the UI |
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Architecture
 
-```text
-User
-  ↓
-Streamlit Frontend
-  ↓
-FastAPI Backend
-  ↓
-Embedding Model (SentenceTransformers)
-  ↓
-FAISS Vector Store
-  ↓
-Top-K Retrieval
-  ↓
-Prompt Builder
-  ↓
-Ollama (Mistral LLM)
-  ↓
-Final Answer
+```
+Browser (ChatGPT-like UI)
+  │  SSE streaming / REST
+  ▼
+FastAPI Backend  (/api/*)
+  │
+  ├─ Guardrails (input check)
+  ├─ Query Expansion (LLM → 2 sub-queries)
+  │
+  ├─ Hybrid Retriever
+  │    ├─ FAISS Dense Retriever (SentenceTransformers all-MiniLM-L6-v2)
+  │    └─ BM25 Sparse Retriever (rank-bm25)
+  │         └─ Reciprocal Rank Fusion
+  │
+  ├─ Cross-Encoder Reranker (ms-marco-MiniLM-L-6-v2)
+  │
+  ├─ Short-term Memory (in-memory, per session)
+  ├─ Long-term Memory (SQLite, persisted)
+  │
+  ├─ Prompt Builder (context + history)
+  ├─ LLM Generator (Ollama/Mistral or OpenAI)
+  │
+  ├─ Output Guardrails
+  └─ Query Cache (TTL dict, 200 entries)
 ```
 
 ---
 
 ## 📂 Project Structure
 
-```bash
-Enterprise_doc_intelligence/
-│
+```
+rag /
 ├── backend/
-│   ├── app/                     # FastAPI application
-│   ├── pipeline/                # RAG modules
-│   ├── data/                    # Runtime data storage
-│   │   ├── raw/                 # Uploaded documents
-│   │   └── embeddings/          # FAISS index files
-│   │
+│   ├── app/
+│   │   ├── api/routes.py          # All FastAPI endpoints
+│   │   ├── core/                  # Config, logger, security (JWT)
+│   │   ├── services/rag_services.py  # Central orchestrator
+│   │   └── main.py
+│   ├── pipeline/
+│   │   ├── chunking/              # RecursiveChunker
+│   │   ├── embeddings/            # SentenceTransformer embedder
+│   │   ├── evaluation/            # Recall, Precision, MRR, NDCG, faithfulness
+│   │   ├── guardrails/            # Input & output safety
+│   │   ├── ingestion/             # PDF + DOCX loaders
+│   │   ├── llm/                   # Ollama + OpenAI (sync/async/stream)
+│   │   ├── memory/                # Short-term + long-term memory
+│   │   ├── query_expansion/       # LLM-based query expansion
+│   │   ├── reranker/              # Cross-encoder reranker
+│   │   ├── retriever/             # Vector, BM25, Hybrid retrievers
+│   │   └── vector_store/          # FAISS store
+│   ├── data/                      # Embeddings, raw docs, memory.db
 │   ├── Dockerfile
 │   ├── requirements.txt
-│
+│   └── eval_set.json
 ├── frontend/
-│   ├── app.py                   # Streamlit UI
-│   ├── Dockerfile
-│   ├── requirements.txt
-│
-├── .gitignore
-├── README.md
+│   ├── app.py                     # Streamlit ChatGPT-like UI
+│   └── requirements.txt
+├── docker-compose.yml
+└── README.md
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Quick Start
 
-| Layer | Technology |
-|-------|------------|
-| Backend | FastAPI |
-| Frontend | Streamlit |
-| Vector Database | FAISS (IndexFlatIP) |
-| Embeddings | sentence-transformers |
-| LLM | Ollama (Mistral) |
-| Authentication | JWT |
-| Deployment | Docker |
-| Language | Python 3.10+ |
-
----
-
-## 🔐 Authentication
-
-All protected endpoints require a valid JWT token.
-
-### Login Endpoint
-
-
-POST /login
-
-
-Default credentials (configurable via `.env`):
-
-
-username: admin
-password: admin123
-
-
----
-
-## 📡 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|------------|
-| GET | /health | Health check |
-| POST | /login | Generate JWT token |
-| POST | /upload | Upload document |
-| GET | /documents | List indexed documents |
-| DELETE | /documents/{filename} | Delete document |
-| POST | /query | Ask a question |
-| GET | /metrics | System metrics |
-
----
-
-## 🧠 RAG Workflow
-
-1. Upload PDF document
-2. Extract text
-3. Chunk with overlap
-4. Generate embeddings
-5. Normalize embeddings
-6. Store in FAISS (cosine similarity)
-7. On query:
-   - Embed query
-   - Retrieve top-k chunks
-   - Build contextual prompt
-   - Send to Ollama
-   - Return final answer
-
----
-
-## 🖥️ Local Setup
-
-### 1️⃣ Clone Repository
+### 1. Prerequisites
 
 ```bash
-git clone https://github.com/Sanidhya555/Enterprise_doc_intelligence.git
-cd Enterprise_doc_intelligence
-```
-
----
-
-### 2️⃣ Create Virtual Environment
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate   # Windows
-```
-
----
-
-### 3️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-### 4️⃣ Setup Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-SECRET_KEY=your_secret_key
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=admin123
-OLLAMA_BASE_URL=http://localhost:11434
-```
-
----
-
-### 5️⃣ Start Ollama
-
-Install Ollama from:
-
+# Install Ollama
 https://ollama.com/download
-
-Then run:
-
-```bash
 ollama serve
 ollama pull mistral
 ```
 
----
-
-### 6️⃣ Run Backend
+### 2. Backend
 
 ```bash
-uvicorn app.main:app --reload
+cd backend
+python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# Create .env
+cat > .env << EOF
+SECRET_KEY=your-secret-key-here
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=mistral
+USE_OLLAMA=true
+EOF
+
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Swagger Docs:  
-http://127.0.0.1:8000/docs
+### 3. Frontend
 
----
-
-### 7️⃣ Run Frontend
+In a new terminal:
 
 ```bash
-streamlit run frontend/app.py
+cd frontend
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Open:  
-http://localhost:8501
+### 4. Open the UI
 
+Visit **http://localhost:8501** for the Streamlit frontend (default Streamlit port).
 
-## 🐳 Docker Setup
+Login with `admin` / `admin123`.
 
-### Build Image
+### 5. (Optional) OpenAI instead of Ollama
+
+```env
+USE_OLLAMA=false
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini
+```
+
+---
+
+## 🐳 Docker
 
 ```bash
-docker build -t enterprise-rag -f docker/Dockerfile .
+docker-compose up --build
 ```
 
-### Run Container
+Then open **http://localhost:8501** for the frontend and **http://localhost:8000** for the API.
 
-```bash
-docker run -p 8000:8000 enterprise-rag
+---
+
+## 📡 API Reference
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/login` | Get JWT token |
+| GET  | `/api/health` | Health check |
+| POST | `/api/upload` | Upload PDF/DOCX |
+| GET  | `/api/documents` | List documents |
+| DELETE | `/api/documents/{filename}` | Delete document |
+| POST | `/api/query` | Query (supports `stream: true`) |
+| GET  | `/api/sessions` | List chat sessions |
+| POST | `/api/sessions/new` | Create session |
+| GET  | `/api/sessions/{id}/messages` | Session history |
+| DELETE | `/api/sessions/{id}` | Delete session |
+| GET  | `/api/metrics` | System metrics |
+| POST | `/api/evaluate/retrieval` | Run retrieval evaluation |
+
+### Query Request
+
+```json
+{
+  "question": "What are the key findings?",
+  "session_id": "sess_abc123",
+  "top_k": 5,
+  "stream": true,
+  "use_cache": true
+}
 ```
----
 
-## 📊 FAISS Configuration
+### Query Response (non-streaming)
 
-- **Index Type:** `IndexFlatIP`
-- **Similarity Metric:** Cosine similarity (L2-normalized vectors)
-- **Embedding dtype:** `float32`
-- **Persistent Storage:** `data/embeddings/`
-
----
-
-## 🔒 Production Considerations
-
-- Runtime-generated FAISS index is not committed to Git
-- Sensitive configuration values stored in `.env`
-- Vector normalization ensures consistent cosine similarity scoring
-- Clean repository structure (no virtual environment or generated files)
-- Modular RAG pipeline for maintainability and scalability
+```json
+{
+  "answer": "The key findings include...",
+  "sources": [
+    {"filename": "report.pdf", "chunk_id": 12, "score": 0.87}
+  ],
+  "latency_ms": 1243,
+  "cached": false,
+  "expanded_queries": ["What are the key findings?", "What are the main results?"]
+}
+```
 
 ---
 
-## 🚀 Future Improvements
+## 📊 Evaluation Dataset Format
 
-- Role-Based Access Control (RBAC)
-- Streaming LLM responses
-- Async embedding pipeline
-- Scalable FAISS IVF index
-- Cloud storage integration (S3)
-- CI/CD pipeline
-- Kubernetes deployment
-- Redis caching layer
+Create `backend/data/eval_dataset.json`:
+
+```json
+[
+  {"query": "What is machine learning?", "relevant_keyword": "machine learning"},
+  {"query": "How does RAG work?",        "relevant_keyword": "retrieval augmented"}
+]
+```
+
+Then call `POST /api/evaluate/retrieval?top_k=5`.
 
 ---
 
-## 🎯 Use Cases
+## ⚙️ Configuration
 
-- Enterprise document search
-- Internal knowledge assistant
-- Legal document analysis
-- HR policy Q&A
-- Research document summarization
+| Env Variable | Default | Description |
+|---|---|---|
+| `SECRET_KEY` | — | JWT signing key (required) |
+| `ADMIN_USERNAME` | `admin` | Login username |
+| `ADMIN_PASSWORD` | `admin123` | Login password |
+| `USE_OLLAMA` | `true` | Use Ollama instead of OpenAI |
+| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
+| `OLLAMA_MODEL` | `mistral` | Ollama model name |
+| `OPENAI_API_KEY` | — | OpenAI key (if USE_OLLAMA=false) |
+| `OPENAI_MODEL` | `gpt-4o-mini` | OpenAI model |
 
 ---
 
 ## 👨‍💻 Author
 
-**Sanidhya Sachin Kulkarni**  
-AI/ML Engineer | Backend Developer  
+**Sanidhya Sachin Kulkarni** — AI/ML Engineer
 
 ---
 
 ## 📜 License
 
-MIT License
+MIT

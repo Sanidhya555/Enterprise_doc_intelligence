@@ -1,25 +1,20 @@
-import logging
-import sys
-import os
+import logging, sys, os
 
+def setup_logger(name: str = "rag_app") -> logging.Logger:
+    logger = logging.getLogger(name)
 
-def setup_logger():
-    logger = logging.getLogger("rag_app")
-
-    log_level = os.getenv("LOG_LEVEL", "INFO").upper()
-    logger.setLevel(log_level)
-
-    handler = logging.StreamHandler(sys.stdout)
-
-    formatter = logging.Formatter(
-        "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
-    )
-
-    handler.setFormatter(formatter)
-
-    if not logger.handlers:
-        logger.addHandler(handler)
-
+    if logger.handlers:
+        return logger
+    
+    level = os.getenv("LOG_LEVEL", "INFO").upper()
+    
+    logger.setLevel(level)
+    
+    h = logging.StreamHandler(sys.stdout)
+    
+    h.setFormatter(logging.Formatter("%(asctime)s | %(levelname)s | %(name)s | %(message)s"))
+    
+    logger.addHandler(h)
     logger.propagate = False
-
+    
     return logger

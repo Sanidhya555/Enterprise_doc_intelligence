@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What did Morgan Stanley use evals for in the PDF?",
+    "ground_truth": "Morgan Stanley used evals to ensure quality and safety for AI use cases, focusing on model performance for financial advisors.",
+    "reference_context": "An eval is simply a rigorous, structured process for measuring how AI models actually perform against benchmarks in a given use case. It’s also a way to continuously improve the AI-enabled processes, with expert feedback at every step."
+  },
+  {
+    "question": "Which three model evals did Morgan Stanley start with?",
+    "ground_truth": "They started with language translation, summarization, and human trainers.",
+    "reference_context": "They started with three model evals: 01 Language translation Measuring the accuracy and quality of translations produced by a model. 02 Summarization Evaluating how a model condenses information, using agreed-upon metrics for accuracy, relevance, and coherence. 03 Human trainers Comparing AI results to responses from expert advisors, grading for accuracy and relevance."
+  },
+  {
+    "question": "What percentage of Morgan Stanley advisors now use OpenAI every day?",
+    "ground_truth": "98% of Morgan Stanley advisors use OpenAI every day.",
+    "reference_context": "How it’s going Today, 98% of Morgan Stanley advisors use OpenAI every day; access to documents has jumped from 20% to 80%, with dramatically reduced search time; and advisors spend more time on client relationships, thanks to task automation and faster insights."
+  },
+  {
+    "question": "What was the business impact from Morgan Stanley advisors using OpenAI every day?",
+    "ground_truth": "Document access rose from 20% to 80%, search time decreased, and advisors spent more time on client relationships.",
+    "reference_context": "Today, 98% of Morgan Stanley advisors use OpenAI every day; access to documents has jumped from 20% to 80%, with dramatically reduced search time; and advisors spend more time on client relationships, thanks to task automation and faster insights."
+  },
+  {
+    "question": "What is the first lesson for enterprise AI adoption in the PDF?",
+    "ground_truth": "The first lesson is to start with evals.",
+    "reference_context": "Executive summary Seven lessons for enterprise AI adoption 01 Start with evals Use a systematic evaluation process to measure how models perform against your use cases."
+  },
+  {
+    "question": "Why should companies start AI initiatives early?",
+    "ground_truth": "Because AI gains compound over time, and earlier investment allows organizations to iterate, improve, and capture more value.",
+    "reference_context": "Lesson 3 Start now and invest early How Klarna benefits from AI knowledge compounding AI is rarely a plug-and-play solution—use cases grow in sophistication and impact through iteration. The earlier you start, the more your organization benefits from compounding improvements."
+  },
+  {
+    "question": "How much did Klarna reduce average customer service resolution time?",
+    "ground_truth": "Klarna cut average resolution times from 11 minutes to 2 minutes.",
+    "reference_context": "Within a few months, the assistant was handling two-thirds of all service chats—doing the work of hundreds of agents and cutting average resolution times from 11 minutes to just 2."
+  },
+  {
+    "question": "What share of Klarna employees now use AI daily?",
+    "ground_truth": "90% of Klarna employees now use AI daily.",
+    "reference_context": "Just as importantly, 90% of Klarna’s employees now use AI in their daily work."
+  },
+  {
+    "question": "How did Lowe’s improve ecommerce search accuracy?",
+    "ground_truth": "Lowe’s fine-tuned models to improve product tagging accuracy by 20% and error detection by 60%.",
+    "reference_context": "By fine-tuning OpenAI models, the Lowe’s team was able to improve product tagging accuracy by 20%—with error detection improving by 60%."
+  },
+  {
+    "question": "Why is fine-tuning compared to a tailored suit?",
+    "ground_truth": "Because fine-tuning customizes the model to an organization’s specific data, needs, and style, like tailoring a suit to fit precisely.",
+    "reference_context": "What is fine-tuning? If a GPT model is a store-bought suit, fine-tuning is the tailored option—the way you customize the model to your organization’s specific data and needs."
+  },
+  {
+    "question": "What expert-led AI approach did BBVA take?",
+    "ground_truth": "BBVA rolled out ChatGPT Enterprise globally and let employees create custom GPTs while working with Legal, Compliance, and IT Security.",
+    "reference_context": "BBVA, the global banking leader, has more than 125,000 employees... They decided to get AI into the hands of employees—working closely with Legal, Compliance, and IT Security teams to ensure responsible use. They rolled out ChatGPT Enterprise globally, then let people discover their own use cases."
+  },
+  {
+    "question": "How many custom GPTs did BBVA employees create in five months?",
+    "ground_truth": "BBVA employees created over 2,900 custom GPTs in five months.",
+    "reference_context": "In five months, BBVA employees created over 2,900 custom GPTs—some of which reduce project and process timelines from weeks to hours."
+  },
+  {
+    "question": "Which BBVA team used AI to answer 40,000 questions a year on policies and compliance?",
+    "ground_truth": "The Legal team used AI to answer 40,000 policy and compliance questions a year.",
+    "reference_context": "The Legal team Uses it to answer 40,000 questions a year on policies, compliance, and more."
+  },
+  {
+    "question": "What is the name of Mercado Libre’s AI platform?",
+    "ground_truth": "Mercado Libre’s AI platform is called Verdi.",
+    "reference_context": "Mercado Libre, Latin America’s largest ecommerce and fintech company, partnered with OpenAI to build a development platform layer to solve that. It’s called Verdi, and it’s powered by GPT-4o and GPT-4o mini."
+  },
+  {
+    "question": "Which models power Mercado Libre’s Verdi platform?",
+    "ground_truth": "Verdi is powered by GPT-4o and GPT-4o mini.",
+    "reference_context": "It’s called Verdi, and it’s powered by GPT-4o and GPT-4o mini."
+  },
+  {
+    "question": "How many developers does Verdi support at Mercado Libre?",
+    "ground_truth": "Verdi supports 17,000 developers at Mercado Libre.",
+    "reference_context": "Today, it helps their 17,000 developers unify and accelerate their AI application builds."
+  },
+  {
+    "question": "What are the three fronts where AI delivers measurable improvement?",
+    "ground_truth": "AI delivers measurable improvement in workforce performance, automating routine operations, and powering products.",
+    "reference_context": "We’re seeing AI deliver significant, measurable improvements on three fronts: 01 Workforce performance ... 02 Automating routine operations ... 03 Powering products ..."
+  },
+  {
+    "question": "What does the PDF say is required for successful AI adoption?",
+    "ground_truth": "Successful AI adoption requires an experimental mindset, iterative deployment, and treating AI as a new paradigm.",
+    "reference_context": "But leveraging AI isn’t the same as building software or deploying cloud apps. The most successful companies are often those who treat it as a new paradigm. This leads to an experimental mindset and an iterative approach that gets to value faster and with greater buy-in from users and stakeholders."
+  },
+  {
+    "question": "How much token efficiency improvement did Indeed and OpenAI achieve?",
+    "ground_truth": "They achieved similar results with 60% fewer tokens.",
+    "reference_context": "To increase efficiency, OpenAI and Indeed worked together to fine-tune a smaller GPT model that was able to deliver similar results with 60% fewer tokens."
+  },
+  {
+    "question": "What business outcome did Indeed see from improved job recommendation explainability?",
+    "ground_truth": "Indeed saw a 20% increase in job applications and a 13% uplift in hiring success.",
+    "reference_context": "A 20% increase in job applications started ... A 13% uplift in downstream success ... not only were more candidates likely to apply, but employers were more likely to hire them."
+  }
+]

@@ -14,6 +14,9 @@ data/raw/*
 !data/embeddings/.gitkeep
 !data/raw/.gitkeep
 
+backend/data/embeddings/*
+!backend/data/embeddings/.gitkeep
+
 # OS
 .DS_Store
 Thumbs.db
